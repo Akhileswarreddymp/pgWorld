@@ -14,7 +14,7 @@ h2 {
 h3 {
     color: rgb(13, 173, 226);
     text-align: left;
-    margin-left: 20px;
+    margin-right: 200px;
 
 }
 .login {
@@ -45,6 +45,7 @@ label{
     display: block;
     padding: 4px;
     color: lightskyblue;
+    margin-top: 20px;
 
 }
 
