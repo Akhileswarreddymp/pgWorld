@@ -12,8 +12,9 @@ from models import *
 app = FastAPI()
 
 
-@app.get("/send_otp", tags=["Authentication"])
-async def send_otp():
+@app.post("/send_otp", tags=["Authentication"])
+async def send_otp(request:register_mail_send):
+    print("send_mail_data",request)
     otp_generated = random.randint(10000,99999)
     s = smtplib.SMTP('smtp.gmail.com', 587)
     # start TLS for security
@@ -25,11 +26,13 @@ async def send_otp():
     message = f"Your verification cod is {otp_generated}"
     s.subject = "Verification code"
     # sending the mail
-    s.sendmail("akhileswarreddymp@gmail.com", "mpakhileswarreddy@gmail.com", message)
+    s.sendmail("akhileswarreddymp@gmail.com",request.username, message)
+    print("akhileswarreddymp@gmail.com", request.username, message)
     print("Mail sent sucessfully")
     # terminating the session
     s.quit()
     store = await redis_store(otp_generated)
+    return None
 
 
 
