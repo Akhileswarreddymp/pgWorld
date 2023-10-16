@@ -4,3 +4,4 @@ redis
 jsonbender
 requests
 pydantic
+pymongo
