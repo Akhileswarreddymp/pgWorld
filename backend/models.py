@@ -1,6 +1,7 @@
 import redis 
 import pydantic
 import typing
+import datetime
 
 class redisclient():
     def __init__(self) -> None:
@@ -82,7 +83,17 @@ class room_master(pydantic.BaseModel):
     no_of_vacent_beds : int = pydantic.Field(0,**{})
     description : typing.List[str]
     status : status_internal_model
-    
+
+
+
+class register(pydantic.BaseModel):
+    name : str = pydantic.Field("",**{})
+    contact_number : int = pydantic.Field(0,**{})
+    role : str = typing.Optional[str]
+    created_time : typing.Optional[datetime.datetime] = pydantic.Field()
+    updated_time : typing.Optional[datetime.datetime] = pydantic.Field()
+    profile_pic : typing.Optional[str] = pydantic.Field("",**{})
+
 
     
     
