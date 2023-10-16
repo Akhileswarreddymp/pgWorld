@@ -32,8 +32,14 @@ class ratings_internal_model(pydantic.BaseModel):
 class review_internalmodel(pydantic.BaseModel):
     review : typing.List[str]
 
+class occupancy_vacancy(pydantic.BaseModel):
+    occupied : int
+    vacant : int
+
+
 class Pg_Master(pydantic.BaseModel):
     pg_name : str = pydantic.Field("",**{})
+    pg_code : str = pydantic.Field("",**{})
     state : str = pydantic.Field("", **{})
     city : str = pydantic.Field("", **{})
     pincode : int = pydantic.Field(0, **{})
@@ -59,6 +65,24 @@ class Pg_Master(pydantic.BaseModel):
     cost_for_morethan_5sharing_wof : typing.Optional[float] = pydantic.Field(0.0, **{})
     overall_rating : typing.Optional[ratings_internal_model]
     reviews : typing.Optional[review_internalmodel]
+    advance : typing.Optional[float] = pydantic.Field(0.0, **{})
+    maintenance_charge : typing.Optional[float] = pydantic.Field(0.0, **{})
+    negotiable : typing.Optional[bool] = pydantic.Field(False, )
+
+class status_internal_model(pydantic.BaseModel):
+    available : bool = pydantic.Field(False, ) 
+    unavailabe : bool = pydantic.Field(False, )
+
+class room_master(pydantic.BaseModel):
+    pg_name : str = pydantic.Field("",**{})
+    pg_code : str
+    room_number : str = pydantic.Field("",**{})
+    no_of_sharing : int = pydantic.Field(0,**{})
+    no_of_occupied_beds : int = pydantic.Field(0,**{})
+    no_of_vacent_beds : int = pydantic.Field(0,**{})
+    description : typing.List[str]
+    status : status_internal_model
+    
 
     
     
