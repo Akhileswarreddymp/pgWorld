@@ -97,3 +97,5 @@ async def save_login(request : only_otp):
         return {"msg":"Registred Successfully"}
     else:
         return {"msg":"Wrong otp"}
+    
+
