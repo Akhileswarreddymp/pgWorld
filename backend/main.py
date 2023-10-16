@@ -12,7 +12,7 @@ import pydantic
 
 app = FastAPI()
 
-
+# send otp to mail id 
 @app.post("/send_otp", tags=["Authentication"])
 async def send_otp(request: str):
     print("send_mail_data",request)
@@ -36,7 +36,7 @@ async def send_otp(request: str):
     return None
 
 
-
+# store otp in redis 
 async def redis_store(otp):
     redis_client = redisclient()
     key = 'otp'
@@ -46,7 +46,7 @@ async def redis_store(otp):
     print("opt saved==>",redis_client.redis_client.get(key))
 
 
-
+#step 1 in registering 
 @app.post("/register", tags=['Authentication'])
 async def register(data: register_params):
     redis_client = redisclient()
@@ -65,7 +65,7 @@ async def register(data: register_params):
         return {"msg" : "Passwords are not matching"}
     
 
-
+# login
 @app.post("/login", tags=['Authentication'])
 def verification(request: verify_params):
     redis_client = redisclient()
@@ -77,9 +77,11 @@ def verification(request: verify_params):
     else:
         raise HTTPException(status_code=401, detail="Wrong Credentials received")
 
-
+# pydantic model for saving login details
 class only_otp(pydantic.BaseModel):
     otp : str
+
+
 #send otp to registering mail id after clicking on submit  
 @app.post('/reg_otp',tags=['Authentication'])
 async def save_login(request : only_otp):
