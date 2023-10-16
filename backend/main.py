@@ -7,6 +7,7 @@ import asyncio
 import hashlib
 from models import *
 import pydantic
+import pymongo
 
 
 
@@ -48,7 +49,7 @@ async def redis_store(otp):
 
 #step 1 in registering 
 @app.post("/register", tags=['Authentication'])
-async def register(data: register_params):
+async def register(data: register_params,request : register):
     redis_client = redisclient()
     temp_mail = redis_client.redis_client.setex("temp_mail", 3000, data.username)
     hash_temp_password = hashlib.md5(data.password.encode('utf-8')).hexdigest()
@@ -56,9 +57,19 @@ async def register(data: register_params):
     re_temp_password = hashlib.md5(data.re_password.encode('utf-8')).hexdigest()
     temp_passwor = redis_client.redis_client.setex("re_temp_password", 3000, re_temp_password)
     print("email===>", redis_client.redis_client.get("temp_mail").decode())
+    client = pymongo.MongoClient("mongodb://localhost:27017/")
+    collection = client.get_database("Users").get_collection("users")
+    result = collection.find_one({"email": data.username})
+    print("result_register====>",result)
+    if result:
+        return {
+            "msg":"user already exist"
+        }
     print("passwor===>",redis_client.redis_client.get("temp_password").decode())
     if redis_client.redis_client.get("temp_password") == redis_client.redis_client.get("re_temp_password"):
         await send_otp(redis_client.redis_client.get("temp_mail").decode())
+        name = redis_client.redis_client.setex("name",300,request.name)
+        contact_number = redis_client.redis_client.setex("contact_number",300,request.contact_number)
         print("Succesfully registred")
         return {"msg" : "Otp sent Successfully"}
     else:
@@ -69,11 +80,16 @@ async def register(data: register_params):
 @app.post("/login", tags=['Authentication'])
 def verification(request: verify_params):
     redis_client = redisclient()
-    print("verification email==>",request.username)
-    print("verification password===>",verification)
     passwo = hashlib.md5(request.password.encode('utf-8')).hexdigest()
-    if redis_client.redis_client.get("email").decode() == request.username and redis_client.redis_client.get("password").decode() == passwo:
+    client = pymongo.MongoClient("mongodb://localhost:27017/")
+    collection = client.get_database("Users").get_collection("users")
+    print("passwo======>",passwo)
+    result = collection.find_one({"email": request.username})
+    print("db_email===>",result)
+    if result.get("email") == request.username and result.get("password").decode() == passwo:
         return {"msg" : "Successfully Logged in "}
+    # if redis_client.redis_client.get("email").decode() == request.username and redis_client.redis_client.get("password").decode() == passwo:
+    #     return {"msg" : "Successfully Logged in "}
     else:
         raise HTTPException(status_code=401, detail="Wrong Credentials received")
 
@@ -83,8 +99,8 @@ class only_otp(pydantic.BaseModel):
 
 
 #send otp to registering mail id after clicking on submit  
-@app.post('/reg_otp',tags=['Authentication'])
-async def save_login(request : only_otp):
+@app.post('/verify_otp',tags=['Authentication'])
+async def verify_otp(request : only_otp):
     print(type(request))
     request = dict(request)
     redis_client = redisclient()
@@ -92,8 +108,20 @@ async def save_login(request : only_otp):
     print("reg_send_otp",request)
     if str(request["otp"]) == str(redis_client.redis_client.get('otp').decode()):
         print("?????")
-        mail = redis_client.redis_client.setex("email", 30000, redis_client.redis_client.get("temp_mail"))
-        password = redis_client.redis_client.setex("password", 3000, redis_client.redis_client.get("temp_password"))
+        client = pymongo.MongoClient("mongodb://localhost:27017/")
+        db = client["Users"] 
+        collection = db["users"]
+        data = {
+            "name" : redis_client.redis_client.get('name').decode(),
+            "email" : redis_client.redis_client.get('temp_mail').decode(),
+            "contact_number" : redis_client.redis_client.get('contact_number').decode(),
+            "password" : redis_client.redis_client.get('temp_password'),
+            "created_time" : datetime.datetime.now()
+        }
+        storing_into_mongo = collection.insert_one(data)
+
+    #     mail = redis_client.redis_client.setex("email", 30000, redis_client.redis_client.get("temp_mail"))
+    #     password = redis_client.redis_client.setex("password", 3000, redis_client.redis_client.get("temp_password"))
         return {"msg":"Registred Successfully"}
     else:
         return {"msg":"Wrong otp"}
