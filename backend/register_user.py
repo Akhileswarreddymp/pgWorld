@@ -2,6 +2,7 @@ from fastapi import FastAPI,HTTPException,APIRouter
 import asyncio
 import hashlib
 from models import *
+from main import *
 import pydantic
 import pymongo
 from mongo_db import *
@@ -13,7 +14,7 @@ class only_otp(pydantic.BaseModel):
     otp : str
 
 
-
+# Registering the user after verifying Otp
 @router.post('/verify_otp',tags=['Authentication'])
 async def verify_otp(request : only_otp):
     print(type(request))
@@ -60,14 +61,14 @@ async def verification(request: verify_params):
     else:
         raise HTTPException(status_code=401, detail="Wrong Credentials received")
 
-
+# Pydantic model for reset Password
 class reset_pass(pydantic.BaseModel):
     username : str
     old_password : str
     new_password : str
     re_enter_password : str 
 
-    
+ # reset Password if user knows his old password   
 @router.post('/resetpassword', tags=['Authentication'])
 async def reset_password(request : reset_pass):
     collection = await connect_collection("Users","users")
