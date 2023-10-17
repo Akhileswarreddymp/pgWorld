@@ -4,7 +4,7 @@ import hashlib
 from models import *
 import pydantic
 import pymongo
-
+from mongo_db import *
 
 router = APIRouter()
 
@@ -23,9 +23,10 @@ async def verify_otp(request : only_otp):
     print("reg_send_otp",request)
     if str(request["otp"]) == str(redis_client.redis_client.get('otp').decode()):
         print("?????")
-        client = pymongo.MongoClient("mongodb://localhost:27017/")
-        db = client["Users"] 
-        collection = db["users"]
+        # client = pymongo.MongoClient("mongodb://localhost:27017/")
+        # db = client["Users"] 
+        # collection = db["users"]
+        collection = await connect_collection("Users","users")
         data = {
             "name" : redis_client.redis_client.get('name').decode(),
             "email" : redis_client.redis_client.get('temp_mail').decode(),
@@ -45,11 +46,12 @@ async def verify_otp(request : only_otp):
 
 # login
 @router.post("/login", tags=['Authentication'])
-def verification(request: verify_params):
+async def verification(request: verify_params):
     redis_client = redisclient()
     passwo = hashlib.md5(request.password.encode('utf-8')).hexdigest()
-    client = pymongo.MongoClient("mongodb://localhost:27017/")
-    collection = client.get_database("Users").get_collection("users")
+    # client = pymongo.MongoClient("mongodb://localhost:27017/")
+    # collection = client.get_database("Users").get_collection("users")
+    collection = await connect_collection("Users","users")
     print("passwo======>",passwo)
     result = collection.find_one({"email": request.username})
     print("db_email===>",result)

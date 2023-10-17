@@ -9,6 +9,7 @@ from models import *
 import pydantic
 import pymongo
 from register_user import router as register_app
+from mongo_db import *
 
 
 app = FastAPI()
@@ -60,8 +61,9 @@ async def register(data: register_params,request : register):
     re_temp_password = hashlib.md5(data.re_password.encode('utf-8')).hexdigest()
     temp_passwor = redis_client.redis_client.setex("re_temp_password", 3000, re_temp_password)
     print("email===>", redis_client.redis_client.get("temp_mail").decode())
-    client = pymongo.MongoClient("mongodb://localhost:27017/")
-    collection = client.get_database("Users").get_collection("users")
+    # client = pymongo.MongoClient("mongodb://localhost:27017/")
+    # collection = client.get_database("Users").get_collection("users")
+    collection = await connect_collection("Users","users")
     result = collection.find_one({"email": data.username})
     print("result_register====>",result)
     if result:
