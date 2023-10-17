@@ -1,7 +1,0 @@
-fastapi
-uvicorn
-redis
-jsonbender
-requests
-pydantic
-pymongo
