@@ -56,9 +56,37 @@ async def verification(request: verify_params):
     result = collection.find_one({"email": request.username})
     print("db_email===>",result)
     if result.get("email") == request.username and result.get("password").decode() == passwo:
-        return {"msg" : "Successfully Logged in "}
+        return {"msg" : "Successfully Logged in"}
     else:
         raise HTTPException(status_code=401, detail="Wrong Credentials received")
+
+
+class reset_pass(pydantic.BaseModel):
+    username : str
+    old_password : str
+    new_password : str
+    re_enter_password : str 
+
+    
+@router.post('/resetpassword', tags=['Authentication'])
+async def reset_password(request : reset_pass):
+    collection = await connect_collection("Users","users")
+    result = collection.find_one({"email": request.username})
+    print("result==>",result)
+    old_pass = hashlib.md5(request.old_password.encode('utf-8')).hexdigest()
+    print("password is ==>",result.get("password").decode())
+    print("new_pass==>",old_pass)
+    if old_pass == result.get("password").decode():
+        filter = {"_id":result.get("_id")}
+        print("filter==>",filter)
+        if request.new_password == request.re_enter_password:
+            new_pass = hashlib.md5(request.new_password.encode('utf-8')).hexdigest()
+            update_field = collection.update_one(filter,{'$set': {"password":new_pass}})
+            return {"msg": "Password Updated Successfully"}
+        else:
+            raise HTTPException(status_code=401, detail="New Password and re entred password are not matched")
+    else:
+        raise HTTPException(status_code=401, detail="Received incorrect password")
 
 
 
