@@ -1,0 +1,40 @@
+.container{
+    background-image: url("view_background.jpeg");
+    background-size: cover;
+    background-position: center center;
+    height: 100vh;
+    margin-top: 0px;
+    margin: -15px;
+    padding: 0;
+}
+
+.button{
+    text-align: right;
+    padding: 20px;
+
+}
+.sign,.reg{
+    text-align: right;
+    color: rgb(21, 37, 183);
+    padding: 14px;
+    border-radius: 18px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-right: 10px;
+}
+.sign:hover{
+    background-color: rgb(167, 213, 239);
+    color: rgb(32, 103, 127);
+    cursor: pointer;
+}   
+.reg:hover{
+    background-color: rgb(167, 213, 239);
+    color: rgb(32, 103, 127);
+    cursor: pointer;
+} 
+
+h1 {
+    color: rgb(218, 220, 232);
+    text-align: center;
+    padding: 100px;
+}
