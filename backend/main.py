@@ -8,15 +8,17 @@ import hashlib
 from models import *
 import pydantic
 import pymongo
-from register_user import router as register_app
+from Authentication import router as register_app
 from mongo_db import *
 from pg_onboard import router as pg_onboard_app
+from update_user import router as user_update_app
 
 
 app = FastAPI()
 
 app.include_router(register_app)
 app.include_router(pg_onboard_app)
+app.include_router(user_update_app)
 
 
 # send otp to mail id 
@@ -53,35 +55,6 @@ async def redis_store(otp):
     print("opt saved==>",redis_client.redis_client.get(key))
 
 
-#step 1 in registering 
-@app.post("/register", tags=['Authentication'])
-async def register(data: register_params,request : register):
-    redis_client = redisclient()
-    temp_mail = redis_client.redis_client.setex("temp_mail", 3000, data.username)
-    hash_temp_password = hashlib.md5(data.password.encode('utf-8')).hexdigest()
-    temp_passwor = redis_client.redis_client.setex("temp_password", 3000, hash_temp_password)
-    re_temp_password = hashlib.md5(data.re_password.encode('utf-8')).hexdigest()
-    temp_passwor = redis_client.redis_client.setex("re_temp_password", 3000, re_temp_password)
-    print("email===>", redis_client.redis_client.get("temp_mail").decode())
-    # client = pymongo.MongoClient("mongodb://localhost:27017/")
-    # collection = client.get_database("Users").get_collection("users")
-    collection = await connect_collection("Users","users")
-    result = collection.find_one({"email": data.username})
-    print("result_register====>",result)
-    if result:
-        return {
-            "msg":"user already exist"
-        }
-    print("passwor===>",redis_client.redis_client.get("temp_password").decode())
-    if redis_client.redis_client.get("temp_password") == redis_client.redis_client.get("re_temp_password"):
-        await send_otp(redis_client.redis_client.get("temp_mail").decode())
-        name = redis_client.redis_client.setex("name",300,request.name)
-        contact_number = redis_client.redis_client.setex("contact_number",300,request.contact_number)
-        print("Succesfully registred")
-        return {"msg" : "Otp sent Successfully"}
-    else:
-        return {"msg" : "Passwords are not matching"}
-    
 
 
 
