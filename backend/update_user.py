@@ -11,7 +11,7 @@ router = APIRouter()
 
 #step 1 in registering 
 @router.post("/user_register", tags=['Users'])
-async def register(data: register_params,request : register):
+async def register(data: register_params,request : user_register):
     redis_client = redisclient()
     temp_mail = redis_client.redis_client.setex("temp_mail", 3000, data.username)
     hash_temp_password = hashlib.md5(data.password.encode('utf-8')).hexdigest()
@@ -70,7 +70,27 @@ async def verify_otp(request : only_otp):
         return {"msg":"Registred Successfully"}
     else:
         raise HTTPException(status_code=401, detail="Wrong Credentials received")
+    
+
+class user_id(pydantic.BaseModel):
+    email : str 
+
 
 @router.post('/update_user',tags=['Users'])
-async def update_user(request : register):
-    pass
+async def update_user(data1 : user_id,request : user_register):
+    data = request.dict()
+    collection = await connect_collection("Users","users")
+    result = collection.find_one({"email": data1.email})
+    filter = {"_id":result.get("_id")}
+    result = collection.find_one(filter)
+    print("updated_result--->",result)
+    if result:
+        updated_data = {
+            "name" : data.get("name"),
+            "contact_number" : data.get("contact_number"),
+            "updated_time" : datetime.datetime.now()
+        }
+        db_update = collection.update_one(filter, {'$set': updated_data})
+        return {"msg" : "updated Successfully"}
+    else:
+        raise HTTPException(status_code=403, detail="Wrong Credentials received")

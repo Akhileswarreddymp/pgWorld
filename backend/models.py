@@ -41,6 +41,7 @@ class occupancy_vacancy(pydantic.BaseModel):
 class Pg_Master(pydantic.BaseModel):
     pg_name : str = pydantic.Field("",**{})
     pg_code : str = pydantic.Field("",**{})
+    email : str = pydantic.Field("",**{})
     state : str = pydantic.Field("", **{})
     city : str = pydantic.Field("", **{})
     pincode : int = pydantic.Field(0, **{})
@@ -70,6 +71,8 @@ class Pg_Master(pydantic.BaseModel):
     advance : typing.Optional[float] = pydantic.Field(0.0, **{})
     maintenance_charge : typing.Optional[float] = pydantic.Field(0.0, **{})
     negotiable : typing.Optional[bool] = pydantic.Field(False, )
+    on_boarded_time : typing.Optional[datetime.datetime]
+    updated_time : typing.Optional[datetime.datetime]
 
 class status_internal_model(pydantic.BaseModel):
     available : bool = pydantic.Field(False, ) 
@@ -87,9 +90,9 @@ class room_master(pydantic.BaseModel):
 
 
 
-class register(pydantic.BaseModel):
+class user_register(pydantic.BaseModel):
     name : str = pydantic.Field("",**{})
-    contact_number : int = pydantic.Field(0,**{})
+    contact_number : str = pydantic.Field(0,**{})
     role : str = typing.Optional[str]
     created_time : typing.Optional[datetime.datetime] = pydantic.Field()
     updated_time : typing.Optional[datetime.datetime] = pydantic.Field()
