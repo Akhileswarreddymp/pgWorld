@@ -10,11 +10,13 @@ import pydantic
 import pymongo
 from register_user import router as register_app
 from mongo_db import *
+from pg_onboard import router as pg_onboard_app
 
 
 app = FastAPI()
 
 app.include_router(register_app)
+app.include_router(pg_onboard_app)
 
 
 # send otp to mail id 
