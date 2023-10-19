@@ -9,9 +9,8 @@ router = APIRouter()
 async def pg_onboard(request : Pg_Master):
     if not isinstance(request,dict):
         data = request.dict()
-    data_base = await connect_collection("Onboard","onboard")
+    data_base = await connect_collection("Pg_master","pg_master")
     record = data_base.find_one({"pg_code":data.get("pg_code")})
-    filter = {"_id":record.get("_id")}
     print("record====>",record)
     current_datetime = datetime.datetime.now()
     formatted_datetime = current_datetime.strftime("%Y-%m-%dT%H:%M:%S")
@@ -53,6 +52,7 @@ async def pg_onboard(request : Pg_Master):
         db_update_data = data_base.insert_one(db_data)
         return {"msg" : "On Borded Successfully"}
     else:
+        filter = {"_id":record.get("_id")}
         db_data = {
             "email" : data.get("email"),
             "pg_name" : data.get("pg_name"),
@@ -81,11 +81,13 @@ async def pg_onboard(request : Pg_Master):
             "cost_of_2sharing_wof" : data.get("cost_of_2sharing_wof"),
             "cost_of_single_sharing_wof" : data.get("cost_of_single_sharing_wof"),
             "cost_for_morethan_5sharing_wof" : data.get("cost_for_morethan_5sharing_wof"),
+            
         }
         db_data["advance"] = data.get("advance")
         db_data["maintenance_charge"] = data.get("maintenance_charge")
         db_data["negotiable"] = data.get("negotiable") 
         db_data["updated_time"] = formatted_datetime
+        db_data["total_vacancy"] = data.get("total_vacancy")
         db_update = data_base.update_one(filter, {'$set': db_data})
         return {"msg":"updated"}
 

@@ -73,10 +73,11 @@ class Pg_Master(pydantic.BaseModel):
     negotiable : typing.Optional[bool] = pydantic.Field(False, )
     on_boarded_time : typing.Optional[datetime.datetime]
     updated_time : typing.Optional[datetime.datetime]
+    total_vacancy : int = pydantic.Field(0, **{})
 
 class status_internal_model(pydantic.BaseModel):
-    available : bool = pydantic.Field(False, ) 
-    unavailabe : bool = pydantic.Field(False, )
+    available : typing.Optional[bool] = pydantic.Field(False, ) 
+    unavailabe : typing.Optional[bool] = pydantic.Field(False, )
 
 class room_master(pydantic.BaseModel):
     pg_name : str = pydantic.Field("",**{})
@@ -84,7 +85,7 @@ class room_master(pydantic.BaseModel):
     room_number : str = pydantic.Field("",**{})
     no_of_sharing : int = pydantic.Field(0,**{})
     no_of_occupied_beds : int = pydantic.Field(0,**{})
-    no_of_vacent_beds : int = pydantic.Field(0,**{})
+    no_of_vacant_beds : int = pydantic.Field(0,**{})
     description : typing.List[str]
     status : status_internal_model
 
