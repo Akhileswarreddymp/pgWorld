@@ -12,10 +12,27 @@ router = APIRouter()
 class query(pydantic.BaseModel):
     query : list[dict]
 
-@router.get('/get_details', tags=['On Board'])
+@router.get('/get_room_details', tags=['On Board'])
 async def get_room_details(request : query):
     query1 = {'$and': request}
     collection = await connect_collection("Room_master","room_master")
+    cursor = collection.find(query1)
+    results = []
+
+    for document in cursor:
+        results.append(document)
+    if not results:
+        raise HTTPException(status_code=404, detail="No documents found")
+    serialized_results = json_util.dumps(results)
+    data = json.loads(serialized_results)
+    print("data--->",data)
+    return data
+
+
+@router.get('/get_pg_details', tags=['On Board'])
+async def get_pg_details(request : query):
+    query1 = {'$and': request}
+    collection = await connect_collection("Pg_master","pg_master")
     cursor = collection.find(query1)
     results = []
 

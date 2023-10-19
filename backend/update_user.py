@@ -18,6 +18,7 @@ async def register(data: register_params,request : user_register):
     temp_passwor = redis_client.redis_client.setex("temp_password", 3000, hash_temp_password)
     re_temp_password = hashlib.md5(data.re_password.encode('utf-8')).hexdigest()
     temp_passwor = redis_client.redis_client.setex("re_temp_password", 3000, re_temp_password)
+    temp_mail = redis_client.redis_client.setex("role", 3000, request.role)
     print("email===>", redis_client.redis_client.get("temp_mail").decode())
     # client = pymongo.MongoClient("mongodb://localhost:27017/")
     # collection = client.get_database("Users").get_collection("users")
@@ -61,6 +62,7 @@ async def verify_otp(request : only_otp):
             "email" : redis_client.redis_client.get('temp_mail').decode(),
             "contact_number" : redis_client.redis_client.get('contact_number').decode(),
             "password" : redis_client.redis_client.get('temp_password').decode(),
+            "role" : redis_client.redis_client.get('role').decode(),
             "created_time" : datetime.datetime.now()
         }
         storing_into_mongo = collection.insert_one(data)
@@ -88,6 +90,7 @@ async def update_user(data1 : user_id,request : user_register):
         updated_data = {
             "name" : data.get("name"),
             "contact_number" : data.get("contact_number"),
+            "role" : data.get("role"),
             "updated_time" : datetime.datetime.now()
         }
         db_update = collection.update_one(filter, {'$set': updated_data})

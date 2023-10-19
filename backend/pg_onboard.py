@@ -87,7 +87,7 @@ async def pg_onboard(request : Pg_Master):
         db_data["maintenance_charge"] = data.get("maintenance_charge")
         db_data["negotiable"] = data.get("negotiable") 
         db_data["updated_time"] = formatted_datetime
-        db_data["total_vacancy"] = data.get("total_vacancy")
+        db_data["total_vacant"] = data.get("total_vacancy")
         db_update = data_base.update_one(filter, {'$set': db_data})
         return {"msg":"updated"}
 

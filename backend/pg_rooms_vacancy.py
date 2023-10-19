@@ -44,7 +44,7 @@ async def no_of_room_vacant(request : room_master):
             if db_query:
                 for i in db_query:
                     total_vacent += i["no_of_vacant_beds"]
-                    total_vacent +=  data.get("no_of_vacant_beds")
+                total_vacent +=  data.get("no_of_vacant_beds")
                 print("total_in_if====>",total_vacent)
         except Exception as e:
             print("exception_raised===>",e)
@@ -78,8 +78,9 @@ async def no_of_room_vacant(request : room_master):
             if db_query:
                 for i in db_query:
                     total_vacent += i["no_of_vacant_beds"]
-                    total_vacent +=  data.get("no_of_vacant_beds")
-                print("total_in_if====>",total_vacent)
+                    print("total_in_if==>",total_vacent)
+                total_vacent +=  data.get("no_of_vacant_beds")
+                print("total_out_of_if====>",total_vacent)
         except Exception as e:
             print("exception_raised===>",e)
             total_vacent = data.get("no_of_vacant_beds")
