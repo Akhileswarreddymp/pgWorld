@@ -26,7 +26,7 @@ async def get_room_details(request : query):
     serialized_results = json_util.dumps(results)
     data = json.loads(serialized_results)
     print("data--->",data)
-    return data
+    return data 
 
 
 @router.get('/get_pg_details', tags=['On Board'])
