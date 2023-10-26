@@ -11,14 +11,14 @@ router = APIRouter()
 
 #step 1 in registering 
 @router.post("/user_register", tags=['Users'])
-async def register(data: register_params,request : user_register):
+async def register(data: register_params):
     redis_client = redisclient()
     temp_mail = redis_client.redis_client.setex("temp_mail", 3000, data.username)
     hash_temp_password = hashlib.md5(data.password.encode('utf-8')).hexdigest()
     temp_passwor = redis_client.redis_client.setex("temp_password", 3000, hash_temp_password)
     re_temp_password = hashlib.md5(data.re_password.encode('utf-8')).hexdigest()
     temp_passwor = redis_client.redis_client.setex("re_temp_password", 3000, re_temp_password)
-    temp_mail = redis_client.redis_client.setex("role", 3000, request.role)
+    temp_mail = redis_client.redis_client.setex("role", 3000, data.role)
     print("email===>", redis_client.redis_client.get("temp_mail").decode())
     # client = pymongo.MongoClient("mongodb://localhost:27017/")
     # collection = client.get_database("Users").get_collection("users")
@@ -32,9 +32,8 @@ async def register(data: register_params,request : user_register):
     print("passwor===>",redis_client.redis_client.get("temp_password").decode())
     if redis_client.redis_client.get("temp_password") == redis_client.redis_client.get("re_temp_password"):
         await send_otp(redis_client.redis_client.get("temp_mail").decode())
-        name = redis_client.redis_client.setex("name",300,request.name)
-        contact_number = redis_client.redis_client.setex("contact_number",300,request.contact_number)
-        print("Succesfully registred")
+        name = redis_client.redis_client.setex("name",300,data.name)
+        contact_number = redis_client.redis_client.setex("contact_number",300,data.contact_number)
         return {"msg" : "Otp sent Successfully"}
     else:
         return {"msg" : "Passwords are not matching"}
@@ -66,7 +65,7 @@ async def verify_otp(request : only_otp):
             "created_time" : datetime.datetime.now()
         }
         storing_into_mongo = collection.insert_one(data)
-
+        print("registred Successfully")
     #     mail = redis_client.redis_client.setex("email", 30000, redis_client.redis_client.get("temp_mail"))
     #     password = redis_client.redis_client.setex("password", 3000, redis_client.redis_client.get("temp_password"))
         return {"msg":"Registred Successfully"}

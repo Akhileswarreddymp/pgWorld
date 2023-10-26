@@ -9,10 +9,15 @@ from mongo_db import *
 
 router = APIRouter()
 
+class otp(pydantic.BaseModel):
+    mail : str
 
 # send otp to mail id 
 @router.post("/send_otp", tags=["Authentication"])
-async def send_otp(request: str):
+async def send_otp(request: otp):
+    if not isinstance(request,str):
+        d = dict(request)
+        request = d.get("mail")
     print("send_mail_data",request)
     otp_generated = random.randint(10000,99999)
     s = smtplib.SMTP('smtp.gmail.com', 587)
@@ -31,7 +36,7 @@ async def send_otp(request: str):
     # terminating the session
     s.quit()
     store = await redis_store(otp_generated)
-    return None
+    return {"msg" : "mail Sent Successfully"}
 
 
 # store otp in redis 

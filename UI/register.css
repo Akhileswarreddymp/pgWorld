@@ -5,7 +5,7 @@
     height: 100vh;
     margin-top: 0px;
     margin: -15px;
-    padding: 0;
+    padding-bottom: 15px;
 }
 
 h2 {
@@ -27,6 +27,12 @@ h3 {
     border-radius: 4px;
     margin-left: 35%;
     margin-top: 0px;
+}
+.error{
+    font-size: small;
+    margin-top: 1px;
+    text-align: left;
+    margin-left: 10%;
 }
 input{
     width: 300px;

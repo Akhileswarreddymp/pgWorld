@@ -12,15 +12,20 @@
         <div class="login"> 
             <h2>Welcome To PG World</h2>
             <h3>Sign In</h3>
-            <label for="User">Email or Phone Number</label>
-            <input type="text" name="User" id="" placeholder="Email or Phone Number">
-            <label for="password">Password</label>
-            <input type="password" name="" id="" placeholder="Password">
-            <a id="anchar" href="">Forgot Password ?</a>
-            <a id="dont" href="register.html">Don't have an account</a>
-            <button class="submit">Sign In</button>
+            <form id="loginForm">
+                <label for="username">Email or Phone Number</label>
+                <input type="text" name="username" id="username" placeholder="Email or Phone Number" required>
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" placeholder="Password" required>
+                <div class="error" id="error-message" style="color: red;"></div>
+                <a id="anchar" href="">Forgot Password ?</a>
+                <a id="dont" href="register.html">Don't have an account</a>
+                <button class="submit">Sign In</button>
+            
+            </form>
         </div>
     </div>
     
+    <script src="login.js"></script>
 </body>
 </html>

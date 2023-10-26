@@ -14,6 +14,12 @@ class register_params(pydantic.BaseModel):
     username : str
     password : str
     re_password : str
+    name : str = pydantic.Field("",**{})
+    contact_number : str = pydantic.Field(0,**{})
+    role : typing.Optional[str]
+    created_time : typing.Optional[datetime.datetime]
+    updated_time : typing.Optional[datetime.datetime]
+    profile_pic : typing.Optional[str] = pydantic.Field("",**{})
 
 class verify_params(pydantic.BaseModel):
     username : str
