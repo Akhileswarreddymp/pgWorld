@@ -26,7 +26,7 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
         console.log("Response status code:", response.status);
         if (response.status === 200) {
             // Redirect to the "sign_reg.html" page on successful login.
-            window.location.href = "sign_reg.html";
+            window.location.href = "onboard.html";
         } else {
             // Handle authentication failure and display error message.
             throw new Error('Authentication failed');
