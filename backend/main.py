@@ -16,6 +16,7 @@ from pg_rooms_vacancy import router as pg_room_vacancy_app
 from get_calls import router as get_calls_app
 from add_attachments import router as add_attachments_app
 from fastapi.middleware.cors import CORSMiddleware
+from payments import router as payments_app
 
 app = FastAPI()
 
@@ -25,6 +26,7 @@ app.include_router(user_update_app)
 app.include_router(pg_room_vacancy_app)
 app.include_router(get_calls_app)
 app.include_router(add_attachments_app)
+app.include_router(payments_app)
 
 
 origins = [
@@ -32,6 +34,7 @@ origins = [
     "http://localhost:8001",
     "http://127.0.0.1:8001",
     "http://127.0.0.1:5500",
+    "http://127.0.0.1:5501"
 ]
 
 

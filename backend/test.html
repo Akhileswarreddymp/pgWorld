@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+    <link rel="stylesheet" href="payment.css">
+</head>
+<body>
+    <div class="container">       
+        <div class="login">
+            <h2>Welcome To Final Step To Enter Into PG WORLD</h2>
+            <form id="otp_sent">
+                <label for="">Pay to register</label>
+                <div class="error" id="error-message" style="color: red;"></div>
+                <button id="rzp-button1">Pay</button>
+            </form>
+        </div>
+        <p id="order_details">{{id}}></p>
+    </div>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+        var pdata
+        fetch('http://127.0.0.1:8001/create_payment', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+        .then(function(response) {
+            console.log("Response status code:", response.status);
+            if (response.status === 200) {
+                return response.json();
+            } else {
+                throw new Error('Authentication failed');
+            }
+        })
+        .then(function(data) {
+            pdata = data.request.id;
+            console.log({"id":pdata})
+            var options = {
+                "key": "rzp_test_7OEfNThHSPE7Nb",
+                "name": "Akhil", //your business name
+                "description": "Test Transaction",
+                // "image": "https://example.com/your_logo",
+                "order_id": 'order_Mv5oz9xq8yf4y2',
+                //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+                "handler": function (response){
+                    data = {
+                        razorpay_payment_id : response.razorpay_payment_id,
+                        razorpay_order_id : response.razorpay_order_id,
+                        razorpay_signature : response.razorpay_signature
+                    }
+                    console.log(data)
+                },
+                "prefill": { //We recommend using the prefill parameter to auto-fill customer's contact information, especially their phone number
+                    "name": "Akhil", //your customer's name
+                    "email": "akhileswarreddymp@gmail.com", 
+                    "contact": "9121626362"  //Provide the customer's phone number for better conversion rates 
+                },
+                "theme": {
+                    "color": "#3399cc"
+                }
+            };
+            var rzp1 = new Razorpay(options);
+            rzp1.on('payment.failed', function (response){
+                    alert(response.error.code);
+                    alert(response.error.description);
+                    alert(response.error.source);
+                    alert(response.error.step);
+                    alert(response.error.reason);
+                    alert(response.error.metadata.order_id);
+                    alert(response.error.metadata.payment_id);
+            });
+            document.getElementById('rzp-button1').onclick = function(e){
+                rzp1.open();
+                e.preventDefault();
+            }
+        })
+        .catch(function(error) {
+            document.getElementById("error-message").textContent = "Wrong Credentials";
+        });
+        
+    </script>
+    
+</body>               
+</html>

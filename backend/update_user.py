@@ -42,7 +42,6 @@ async def register(data: register_params):
 class only_otp(pydantic.BaseModel):
     otp : str
 
-# Registering the user after verifying Otp
 @router.post('/verify_user_otp',tags=['Users'])
 async def verify_otp(request : only_otp):
     print(type(request))

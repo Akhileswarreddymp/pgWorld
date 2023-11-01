@@ -1,0 +1,46 @@
+.container{
+    background-image: url("2.jpeg");
+    background-size: cover;
+    background-position: center center;
+    height: 100vh;
+    margin-top: 0px;
+    margin: -15px;
+    padding-bottom: 15px;
+}
+
+.login {
+    background-color: transparent;
+    text-align: center;
+    padding: 280px;
+    border-radius: 4px;
+    margin-left: auto;
+}
+
+.error{
+    font-size: small;
+    margin-top: 1px;
+    text-align: left;
+    margin-left: 10%;
+}
+
+label{
+    font-size: 30px;
+    display: block;
+    padding: 5px;
+    color: rgb(230, 199, 20);
+
+}
+input {
+    width: 300px; /* Set the width to your desired size in pixels or another unit */
+    padding: 10px; /* Add padding to improve appearance */
+    font-size: 14px; /* Adjust the font size as needed */
+}
+button {
+    width: 200px; /* Set the width to your desired size in pixels or another unit */
+    padding: 10px; /* Add padding to improve appearance */
+    font-size: 14px;
+}
+
+h2 {
+    color: #03daf6;
+}
