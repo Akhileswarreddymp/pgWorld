@@ -24,7 +24,7 @@ document.getElementById("otp_sent").addEventListener("submit", function (e) {
         console.log("Response status code:", response.status);
         if (response.status === 200) {
             // Redirect to the "sign_reg.html" page on successful login.
-            window.location.href = "login.html";
+            window.location.href = "../backend/payment.html";
         } else {
             // Handle authentication failure and display error message.
             throw new Error('Authentication failed');

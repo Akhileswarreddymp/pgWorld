@@ -26,7 +26,7 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
         console.log("Response status code:", response.status);
         if (response.status === 200) {
             // Redirect to the "sign_reg.html" page on successful login.
-            window.location.href = "onboard.html";
+            window.location.href = "on_board.html";
         } else {
             // Handle authentication failure and display error message.
             throw new Error('Authentication failed');
@@ -37,3 +37,5 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
         document.getElementById("error-message").textContent = "Wrong Credentials";
     });
 });
+
+
