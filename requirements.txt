@@ -5,3 +5,6 @@ jsonbender
 requests
 pydantic
 pymongo
+httpx
+razorpay
+jinja2 
