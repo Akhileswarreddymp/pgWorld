@@ -1,5 +1,5 @@
 .container{
-    background-image: url("view_background.jpeg");
+    background-image: url("login.jpeg");
     background-size: cover;
     background-position: center center;
     height: 100vh;
@@ -9,10 +9,10 @@
 }
 
 h2 {
-    color: rgb(218, 220, 232);
+    color: white;
 }
 h3 {
-    color: rgb(13, 173, 226);
+    color: aqua;
     text-align: left;
     margin-left: 20px;
 
@@ -48,11 +48,13 @@ input[type="password"]{
     display: inline;
 }
 label{
-    font-size: small;
-    display: block;
-    padding: 4px;
-    color: lightskyblue;
-
+    font-size: 14px;
+    display: flex;
+    justify-content: start;
+    margin-left: 32px;
+    padding-top: 4px;
+    padding-bottom: 2px;
+    color: #02fde4;
 }
 
 .submit{
@@ -96,7 +98,7 @@ label{
     display: inline;
     margin-left: 0px;
     text-decoration: none;
-    color: rgb(226, 204, 204);
+    color: rgb(241, 233, 233);
     font-size: small;
 }
 h3{
