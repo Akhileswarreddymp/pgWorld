@@ -21,68 +21,29 @@
     </div>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script>
-        var pdata
-        fetch('http://127.0.0.1:8001/create_payment', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        })
-        .then(function(response) {
-            console.log("Response status code:", response.status);
-            if (response.status === 200) {
-                return response.json();
+        // Assuming you have already installed Mongoose, require it
+        const mongoose = require('mongoose');
+
+        // Connect to your MongoDB database
+        mongoose.connect('mongodb://localhost:27017/your-database-name', { useNewUrlParser: true, useUnifiedTopology: true });
+
+        // Create a Mongoose model for your OTPs (adjust the schema to match your data)
+        const OtpModel = mongoose.model('Otp', new mongoose.Schema({
+            otp: String,
+        }));
+
+        // Find and display OTP from MongoDB
+        OtpModel.findOne({}, (err, otpDoc) => {
+            if (err) {
+                console.error(err);
             } else {
-                throw new Error('Authentication failed');
-            }
-        })
-        .then(function(data) {
-            pdata = data.request.id;
-            console.log({"id":pdata})
-            var options = {
-                "key": "rzp_test_7OEfNThHSPE7Nb",
-                "name": "Akhil", //your business name
-                "description": "Test Transaction",
-                // "image": "https://example.com/your_logo",
-                "order_id": 'order_Mv5oz9xq8yf4y2',
-                //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-                "handler": function (response){
-                    data = {
-                        razorpay_payment_id : response.razorpay_payment_id,
-                        razorpay_order_id : response.razorpay_order_id,
-                        razorpay_signature : response.razorpay_signature
-                    }
-                    console.log(data)
-                },
-                "prefill": { //We recommend using the prefill parameter to auto-fill customer's contact information, especially their phone number
-                    "name": "Akhil", //your customer's name
-                    "email": "akhileswarreddymp@gmail.com", 
-                    "contact": "9121626362"  //Provide the customer's phone number for better conversion rates 
-                },
-                "theme": {
-                    "color": "#3399cc"
+                if (otpDoc) {
+                    console.log('OTP:', otpDoc.otp);
+                } else {
+                    console.log('No OTP found in the database.');
                 }
-            };
-            var rzp1 = new Razorpay(options);
-            rzp1.on('payment.failed', function (response){
-                    alert(response.error.code);
-                    alert(response.error.description);
-                    alert(response.error.source);
-                    alert(response.error.step);
-                    alert(response.error.reason);
-                    alert(response.error.metadata.order_id);
-                    alert(response.error.metadata.payment_id);
-            });
-            document.getElementById('rzp-button1').onclick = function(e){
-                rzp1.open();
-                e.preventDefault();
             }
-        })
-        .catch(function(error) {
-            document.getElementById("error-message").textContent = "Wrong Credentials";
         });
-        
     </script>
-    
-</body>               
+</body>
 </html>

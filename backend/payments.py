@@ -41,7 +41,7 @@ async def create_payment():
     }
     order_created = client.order.create(order)
     print("order Created--->",order_created)
-    tpl_data=order_created
+    tpl_data=order_created.get("id")
     return {"request": tpl_data}
 
 @router.post("/verify_payment", tags=['Payments'])
