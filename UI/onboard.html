@@ -8,6 +8,76 @@
     <link rel="stylesheet" href="onboard.css">
 </head>
 <body>
-    <div class="container"></div>
+    <div class="container">
+        <div class="login">
+            <div class="form_tag">
+                <form id="Onboard_form">
+                    <label for="pg_name">PG Name</label>
+                    <input type="text" name="pg_name" id="pg_name" placeholder="Enter Your PG Name">
+                    <label for="pg_code">PG Code</label>
+                    <input type="text" name="pg_code" id="pg_code" placeholder="Enter Your PG Code">
+                    <label for="email">Email</label>
+                    <input type="text" id="email" placeholder="Enter Your Email">
+                    <label for="state">State</label>
+                    <input type="text" id="state" placeholder="Enter Your State">
+                    <label for="city">City</label>
+                    <input type="text" id="city" placeholder="Enter Your City">
+                    <label for="pincode">Pincode</label>
+                    <input type="text" id="pincode" placeholder="Enter Your pincode">
+                    <label for="area">Area</label>
+                    <input type="text" id="area" placeholder="Enter Your Area">
+                    <label for="total_rooms">Total Rooms</label>
+                    <input type="text" id="total_rooms" placeholder="Enter Total No Of Rooms In Your PG">
+                    <label for="total_floors">Number of Floors</label>
+                    <input type="text" id="total_floors" placeholder="Enter Total No Of Floors In Your PG">
+                    <label for="5_sharing">Number of 5 Sharing Rooms</label>
+                    <input type="text" id="5_sharing" placeholder="Enter Total No Of 5 Sharing Rooms In Your PG">
+                    <label for="4_sharing">Number of 4 Sharing Rooms</label>
+                    <input type="text" id="4_sharing" placeholder="Enter Total No Of 4 Sharing Rooms In Your PG">
+                    <label for="3_sharing">Number of 3 Sharing Rooms</label>
+                    <input type="text" id="3_sharing" placeholder="Enter Total No Of 3 Sharing Rooms In Your PG">
+                    <label for="2_sharing">Number of 2 Sharing Rooms</label>
+                    <input type="text" id="2_sharing" placeholder="Enter Total No Of 2 Sharing Rooms In Your PG">
+                    <label for="single_sharing">Number of Single Sharing Rooms</label>
+                    <input type="text" id="single_sharing" placeholder="Enter Total No Of single Sharing Rooms In Your PG">
+                    <label for="morethan_5">Morethan 5 Sharing Rooms</label>
+                    <input type="text" id="morethan_5" placeholder="Morethan 5 Sharing Rooms In Your PG">
+                    <label for="5_sharing_cost">Cost Of 5 Sharing Room</label>
+                    <input type="text" id="5_sharing_cost" placeholder="Cost Of 5 Sharing Room In Your PG">
+                    <label for="4_sharing_cost">Cost Of 4 Sharing Room</label>
+                    <input type="text" id="4_sharing_cost" placeholder="Cost Of 4 Sharing Room In Your PG">
+                    <label for="3_sharing_cost">Cost Of 3 Sharing Room</label>
+                    <input type="text" id="3_sharing_cost" placeholder="Cost Of 3 Sharing Room In Your PG">
+                    <label for="2_sharing_cost">Cost Of 2 Sharing Room</label>
+                    <input type="text" id="2_sharing_cost" placeholder="Cost Of 2 Sharing Room In Your PG">
+                    <label for="1_sharing_cost">Cost Of Sinle Sharing Room</label>
+                    <input type="text" id="1_sharing_cost" placeholder="Cost Of Single Sharing Room In Your PG">
+                    <label for="morethan_5_sharing_cost">Cost for morethan 5 Sharing Room</label>
+                    <input type="text" id="morethan_5_sharing_cost" placeholder="Cost for morethan 5 Sharing Room In Your PG">
+                    <label for="without food">Option without food</label>
+                    <select name="yes_or_no" id="yes_or_no">
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                    <label for="cost_wof_food">Cost Difference b/w With Food and without Food</label>
+                    <input type="number" id="cost_wof_food" placeholder="If Yes Enter Deduction amount">
+                    <label for="rating">Google rating of your pg</label>
+                    <input type="text" id="rating" placeholder="Enter Rating Given In Google For Your PG">
+                    <label for="advance">Advance Need To be Paid</label>
+                    <input type="number" id="advance" placeholder="Enter The Advance amount Need to be paid">
+                    <label for="maintenance_charge">Maintenance Charge Need To be Paid</label>
+                    <input type="number" id="maintenance_charge" placeholder="Enter The Maintenance Charge Need To be Paid">
+                    <label for="negotiable">Negotiable</label>
+                    <select name="yes_or_no" id="nego_yes_or_no">
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                    </select>
+                    <div class="error" id="error-message" style="color: red;"></div>
+                    <button class="submit">Finish Onboarding</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="onboard.js"></script>
 </body>
 </html>

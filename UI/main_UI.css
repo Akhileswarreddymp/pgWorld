@@ -1,0 +1,43 @@
+.container{
+    background-color:#010924;
+    background-size: cover;
+    background-position: center center;
+    height: 100vh;
+    margin-top: 0px;
+    margin: -15px;
+    padding-bottom: 15px;
+    padding-top: 0px;
+}
+
+
+.buttons{
+    display: flex; 
+    padding-top: 30px;
+    justify-content: end;   
+}
+.onboard{
+    background-color: rgb(119, 215, 191);
+    padding: 14px;
+    border-radius: 70px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-right: 70px;
+    color: azure;
+    font-size: medium;
+    text-align: center;
+    margin-bottom: 90px;
+    display: flex;
+}
+
+
+.icon_style{
+    margin-top: 8px;
+    margin-left: 6px;
+}
+
+.onboard:hover{
+    filter: brightness(0.8);
+    box-shadow: 10px 5px 10px rgba(0, 0, 0, 0.15s);
+    /* color: white; */
+    /* transform : translateY(-50%) */
+}

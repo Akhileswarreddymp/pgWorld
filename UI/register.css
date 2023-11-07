@@ -44,7 +44,7 @@ input{
     box-sizing: border-box;
 }
 input[type="password"]{
-    margin-bottom: 30pxpx;
+    margin-bottom: 30px;
 }
 label{
     font-size: 14px;
