@@ -73,7 +73,7 @@ class Pg_Master(pydantic.BaseModel):
     cost_of_single_sharing_wof : typing.Optional[float] = pydantic.Field(0.0, **{})
     cost_for_morethan_5sharing_wof : typing.Optional[float] = pydantic.Field(0.0, **{})
     overall_rating : typing.Optional[ratings_internal_model]
-    reviews : typing.Optional[review_internalmodel]
+    # reviews : typing.Optional[review_internalmodel]
     advance : typing.Optional[float] = pydantic.Field(0.0, **{})
     maintenance_charge : typing.Optional[float] = pydantic.Field(0.0, **{})
     negotiable : typing.Optional[bool] = pydantic.Field(False, )

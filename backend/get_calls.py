@@ -46,4 +46,3 @@ async def get_pg_details(request : query):
     return data
 
 
-
