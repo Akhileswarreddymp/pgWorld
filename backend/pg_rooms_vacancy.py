@@ -33,8 +33,7 @@ async def no_of_room_vacant(request : room_master):
             "no_of_vacant_beds" : data.get("no_of_vacant_beds")
         }
         db_data["status"] = {
-            "available" : False,
-            "unavailable" : False
+            "available" : False
         }
         
         total_vacent = 0
@@ -67,8 +66,7 @@ async def no_of_room_vacant(request : room_master):
             "no_of_vacant_beds" : data.get("no_of_vacant_beds")
         }
         db_data["status"] = {
-            "available" : False,
-            "unavailable" : False
+            "available" : False
         }
         total_vacent = 0
         db_data["description"] = data.get("description")
