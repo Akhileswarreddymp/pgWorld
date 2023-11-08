@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vacant Rooms</title>
+    <link rel="stylesheet" href="vacant_rooms.css">
+</head>
+<body>
+    <div class="container">
+        <div class="vacant">
+            <h2>Room Details</h2>
+            <div class="form_tag">
+                <label for="pg_name">PG Name</label>
+                <input type="text" id="pg_name" placeholder="Enter PG Name">
+                <label for="pg_code">PG Code</label>
+                <input type="text" id="pg_code" placeholder="Enter PG Code">
+                <label for="room_number">Room Number</label>
+                <input type="text" id="room_number" placeholder="Enter The Room Number">
+                <label for="sharing">Room Capacity</label>
+                <input type="text" id="sharing" placeholder="Enter The Number Of People Sharing That Room">
+                <label for="occupied">Occupied Beds</label>
+                <input type="text" id="occupied" placeholder="Enter The NUmber Of Occupied Beds In That Room">
+                <label for="availablity">Availablity</label>
+                <select id="availablity">
+                    <option value="true">Yes</option>
+                    <option value="false">NO</option>
+                </select>
+                <div class="error" id="error-message" style="color: red;"></div>
+                <button class="submit">Finish Room Details</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
