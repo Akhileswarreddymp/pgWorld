@@ -76,12 +76,12 @@
                             window.location.href = "../UI/login.html";
                         } else {
                             // Handle authentication failure and display error message.
-                            throw new Error('Authentication failed');
+                            throw new Error('Payment failed');
                         }
                     })
                     .catch(function(error) {
                         // Display the error message for authentication failure.
-                        document.getElementById("error-message").textContent = "Wrong Credentials";
+                        document.getElementById("error-message").textContent = "Wrong Payment Deatils";
                     });
                 },
                 "prefill": {
