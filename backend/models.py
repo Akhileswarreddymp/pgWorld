@@ -83,7 +83,6 @@ class Pg_Master(pydantic.BaseModel):
 
 class status_internal_model(pydantic.BaseModel):
     available : typing.Optional[bool] = pydantic.Field(False, ) 
-    unavailabe : typing.Optional[bool] = pydantic.Field(False, )
 
 class room_master(pydantic.BaseModel):
     pg_name : str = pydantic.Field("",**{})

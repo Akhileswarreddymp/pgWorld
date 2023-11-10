@@ -27,7 +27,7 @@ async def create_payment():
     key_id = "rzp_test_7OEfNThHSPE7Nb"
     key_secret = "TNDKO5lng1XtQ65sDlt0nqw0"
     
-    amount = 10000
+    amount = 10
     client = razorpay.Client(auth=(key_id,key_secret))
     order = {
         "amount": amount*100,
@@ -42,14 +42,21 @@ async def create_payment():
     order_created = client.order.create(order)
     print("order Created--->",order_created)
     tpl_data=order_created.get("id")
+    print(tpl_data)
     return {"request": tpl_data}
 
+class verify_request(pydantic.BaseModel):
+    razorpay_order_id : str
+    razorpay_payment_id : str
+    razorpay_signature : str
+
 @router.post("/verify_payment", tags=['Payments'])
-async def verify_payment():
+async def verify_payment(request : verify_request):
+    if not isinstance(request,dict):
+        data1 = request.dict()
     key_id = "rzp_test_7OEfNThHSPE7Nb"
     key_secret = "TNDKO5lng1XtQ65sDlt0nqw0"
     client = razorpay.Client(auth=(key_id,key_secret))
-    data1 = {"razorpay_payment_id": 'pay_Mv3vZbp0N5wvqF', 'razorpay_order_id': 'order_Mv3th6YugCQpXd', "razorpay_signature": '620d1e407e48f6d533559a74714c1b4155d3142203ffb4f03b223feb56b08c0e'}
     payment_verify = client.utility.verify_payment_signature({
         'razorpay_order_id': data1.get('razorpay_order_id'),
         'razorpay_payment_id': data1.get('razorpay_payment_id'),
@@ -57,6 +64,18 @@ async def verify_payment():
     })
     print("payment_verify",payment_verify)
     if payment_verify == True:
+        redis_client = redisclient()
+        collection = await connect_collection("Users","users")
+        data = {
+            "name" : redis_client.redis_client.get('name').decode(),
+            "email" : redis_client.redis_client.get('temp_mail').decode(),
+            "contact_number" : redis_client.redis_client.get('contact_number').decode(),
+            "password" : redis_client.redis_client.get('temp_password').decode(),
+            "role" : redis_client.redis_client.get('role').decode(),
+            "created_time" : datetime.datetime.now()
+        }
+        storing_into_mongo = collection.insert_one(data)
+        print("registred Successfully")
         return {"msg" : "Payment Successful"}
     else:
-        return {"msg" : "Payment Failed"}
+        raise HTTPException(status_code=4010, detail="Wrong Credentials received")

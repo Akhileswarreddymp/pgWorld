@@ -54,20 +54,20 @@ async def verify_otp(request : only_otp):
         # client = pymongo.MongoClient("mongodb://localhost:27017/")
         # db = client["Users"] 
         # collection = db["users"]
-        collection = await connect_collection("Users","users")
-        data = {
-            "name" : redis_client.redis_client.get('name').decode(),
-            "email" : redis_client.redis_client.get('temp_mail').decode(),
-            "contact_number" : redis_client.redis_client.get('contact_number').decode(),
-            "password" : redis_client.redis_client.get('temp_password').decode(),
-            "role" : redis_client.redis_client.get('role').decode(),
-            "created_time" : datetime.datetime.now()
-        }
-        storing_into_mongo = collection.insert_one(data)
-        print("registred Successfully")
+        # collection = await connect_collection("Users","users")
+        # data = {
+        #     "name" : redis_client.redis_client.get('name').decode(),
+        #     "email" : redis_client.redis_client.get('temp_mail').decode(),
+        #     "contact_number" : redis_client.redis_client.get('contact_number').decode(),
+        #     "password" : redis_client.redis_client.get('temp_password').decode(),
+        #     "role" : redis_client.redis_client.get('role').decode(),
+        #     "created_time" : datetime.datetime.now()
+        # }
+        # storing_into_mongo = collection.insert_one(data)
+        # print("registred Successfully")
     #     mail = redis_client.redis_client.setex("email", 30000, redis_client.redis_client.get("temp_mail"))
     #     password = redis_client.redis_client.setex("password", 3000, redis_client.redis_client.get("temp_password"))
-        return {"msg":"Registred Successfully"}
+        return {"msg":"Verified Successfully"}
     else:
         raise HTTPException(status_code=401, detail="Wrong Credentials received")
     

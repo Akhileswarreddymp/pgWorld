@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+    <link rel="stylesheet" href="payment.css">
+</head>
+<body>
+    <div class="container">       
+        <div class="login">
+            <h2>Welcome To Final Step To Enter Into PG WORLD</h2>
+            <form id="otp_sent">
+                <label for="">Pay to register</label>
+                <div class="error" id="error-message" style="color: red;"></div>
+                <button id="rzp-button1">Pay</button>
+            </form>
+        </div>
+        <p id="order_details"></p>
+    </div>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+        let order_id;
+        let data1
+        fetch('http://127.0.0.1:8001/create_payment', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+        .then(function(response) {
+            console.log("Response status code:", response.status);
+            if (response.status === 200) {
+                return response.json();
+            } else {
+                throw new Error('Registration failed');
+            }
+        })
+        .then(function(data) {
+            document.getElementById("order_details").textContent = data.request;
+            order_id = data.request;
+            
+            // Now that you have the order_id, you can include the third script here
+            includeRazorpayScript(order_id);
+        })
+        .catch(function(error) {
+            document.getElementById("error-message").textContent = error.message;
+        });
+
+        function includeRazorpayScript(order_id) {
+            console.log({"order_id" : order_id});
+            var options = {
+                "key": "rzp_test_7OEfNThHSPE7Nb",
+                "name": "Akhil",
+                "description": "Test Transaction",
+                "order_id": order_id,
+                "handler": function (response) {
+                    var data1 = {
+                        razorpay_payment_id: response.razorpay_payment_id,
+                        razorpay_order_id: response.razorpay_order_id,
+                        razorpay_signature: response.razorpay_signature
+                    };
+                    console.log({"data" : data1});
+                    fetch('http://127.0.0.1:8001/verify_payment', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data1)
+                    })
+                    .then(function(response) {
+                        console.log("Response status code:", response.status);
+                        if (response.status === 200) {
+                            // Redirect to the "sign_reg.html" page on successful login.
+                            window.location.href = "../UI/login.html";
+                        } else {
+                            // Handle authentication failure and display error message.
+                            throw new Error('Authentication failed');
+                        }
+                    })
+                    .catch(function(error) {
+                        // Display the error message for authentication failure.
+                        document.getElementById("error-message").textContent = "Wrong Credentials";
+                    });
+                },
+                "prefill": {
+                    "name": "Akhil",
+                    "email": "akhileswarreddymp@gmail.com",
+                    "contact": "9121626362"
+                },
+                "theme": {
+                    "color": "#3399cc"
+                }
+            };
+            console.log({"options":options})
+            var rzp1 = new Razorpay(options);
+            rzp1.on('payment.failed', function (response) {
+                alert(response.error.code);
+                alert(response.error.description);
+                alert(response.error.source);
+                alert(response.error.step);
+                alert(response.error.reason);
+                alert(response.error.metadata.order_id);
+                alert(response.error.metadata.payment_id);
+            });
+            document.getElementById('rzp-button1').onclick = function(e) {
+                rzp1.open();
+                e.preventDefault();
+            }
+        }
+    </script>
+</body>
+</html>
