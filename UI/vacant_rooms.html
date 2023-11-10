@@ -12,25 +12,28 @@
         <div class="vacant">
             <h2>Room Details</h2>
             <div class="form_tag">
-                <label for="pg_name">PG Name</label>
-                <input type="text" id="pg_name" placeholder="Enter PG Name">
-                <label for="pg_code">PG Code</label>
-                <input type="text" id="pg_code" placeholder="Enter PG Code">
-                <label for="room_number">Room Number</label>
-                <input type="text" id="room_number" placeholder="Enter The Room Number">
-                <label for="sharing">Room Capacity</label>
-                <input type="text" id="sharing" placeholder="Enter The Number Of People Sharing That Room">
-                <label for="occupied">Occupied Beds</label>
-                <input type="text" id="occupied" placeholder="Enter The NUmber Of Occupied Beds In That Room">
-                <label for="availablity">Availablity</label>
-                <select id="availablity">
-                    <option value="true">Yes</option>
-                    <option value="false">NO</option>
-                </select>
-                <div class="error" id="error-message" style="color: red;"></div>
-                <button class="submit">Finish Room Details</button>
+                <form id="vacant_form">
+                    <label for="pg_name">PG Name</label>
+                    <input type="text" id="pg_name" placeholder="Enter PG Name">
+                    <label for="pg_code">PG Code</label>
+                    <input type="text" id="pg_code" placeholder="Enter PG Code">
+                    <label for="room_number">Room Number</label>
+                    <input type="text" id="room_number" placeholder="Enter The Room Number">
+                    <label for="sharing">Room Capacity</label>
+                    <input type="text" id="sharing" placeholder="Enter The Number Of People Sharing That Room">
+                    <label for="occupied">Occupied Beds</label>
+                    <input type="text" id="occupied" placeholder="Enter The NUmber Of Occupied Beds In That Room">
+                    <label for="availablity">Availablity</label>
+                    <select id="availablity">
+                        <option value="true">Yes</option>
+                        <option value="false">NO</option>
+                    </select>
+                    <div class="error" id="error-message" style="color: red;"></div>
+                    <button class="submit">Finish Room Details</button>
+                </form>
             </div>
         </div>
     </div>
+    <script src="vacant_rooms.js"></script>
 </body>
 </html>
