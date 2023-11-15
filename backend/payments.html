@@ -40,8 +40,7 @@
         .then(function(data) {
             document.getElementById("order_details").textContent = data.request;
             order_id = data.request;
-            
-            // Now that you have the order_id, you can include the third script here
+            name = data.name
             includeRazorpayScript(order_id);
         })
         .catch(function(error) {
@@ -50,9 +49,10 @@
 
         function includeRazorpayScript(order_id) {
             console.log({"order_id" : order_id});
+            console.log({"name" : name})
             var options = {
                 "key": "rzp_test_7OEfNThHSPE7Nb",
-                "name": "Akhil",
+                "name": name,
                 "description": "Test Transaction",
                 "order_id": order_id,
                 "handler": function (response) {
@@ -72,15 +72,12 @@
                     .then(function(response) {
                         console.log("Response status code:", response.status);
                         if (response.status === 200) {
-                            // Redirect to the "sign_reg.html" page on successful login.
                             window.location.href = "../UI/login.html";
                         } else {
-                            // Handle authentication failure and display error message.
                             throw new Error('Payment failed');
                         }
                     })
                     .catch(function(error) {
-                        // Display the error message for authentication failure.
                         document.getElementById("error-message").textContent = "Wrong Payment Deatils";
                     });
                 },

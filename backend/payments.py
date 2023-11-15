@@ -26,7 +26,8 @@ class PaymentRequest(pydantic.BaseModel):
 async def create_payment():
     key_id = "rzp_test_7OEfNThHSPE7Nb"
     key_secret = "TNDKO5lng1XtQ65sDlt0nqw0"
-    
+    redis_client = redisclient()
+    name  =  redis_client.redis_client.get('name').decode(),
     amount = 10
     client = razorpay.Client(auth=(key_id,key_secret))
     order = {
@@ -36,14 +37,14 @@ async def create_payment():
         "partial_payment":False,
         "notes": {
             "payment_for": "Registeration",
-            "name": "Akhil"
+            "name": redis_client.redis_client.get('name').decode()
         }
     }
     order_created = client.order.create(order)
     print("order Created--->",order_created)
     tpl_data=order_created.get("id")
     print(tpl_data)
-    return {"request": tpl_data}
+    return {"request": tpl_data,"name" : name}
 
 class verify_request(pydantic.BaseModel):
     razorpay_order_id : str

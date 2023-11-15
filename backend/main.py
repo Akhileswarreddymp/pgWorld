@@ -17,6 +17,7 @@ from get_calls import router as get_calls_app
 from add_attachments import router as add_attachments_app
 from fastapi.middleware.cors import CORSMiddleware
 from payments import router as payments_app
+from video_calls import router as video_call_app
 
 app = FastAPI()
 
@@ -27,7 +28,7 @@ app.include_router(pg_room_vacancy_app)
 app.include_router(get_calls_app)
 app.include_router(add_attachments_app)
 app.include_router(payments_app)
-
+app.include_router(video_call_app)
 
 origins = [
     "http://localhost",

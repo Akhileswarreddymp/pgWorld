@@ -6,7 +6,6 @@ import pymongo
 from bson import json_util
 import json
 from get_calls import *
-
 router = APIRouter()
 
 @router.post('/vacant_rooms',tags=['On Board'])
