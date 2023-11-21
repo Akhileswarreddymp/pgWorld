@@ -84,7 +84,7 @@ document.getElementById("Onboard_form").addEventListener("submit", function (e) 
     document.getElementById("error-message").textContent = '';
 
     // Make an API request using the fetch() function.
-    fetch('http://127.0.0.1:8001/pg_onboard', {
+    fetch('http://127.0.0.1:8001/api/pgonboard/pg_onboard', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

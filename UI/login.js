@@ -15,7 +15,7 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
     document.getElementById("error-message").textContent = '';
 
     // Make an API request using the fetch() function.
-    fetch('http://127.0.0.1:8001/login', {
+    fetch('http://127.0.0.1:8001/api/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

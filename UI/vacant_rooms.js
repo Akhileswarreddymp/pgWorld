@@ -29,7 +29,7 @@ document.getElementById("vacant_form").addEventListener("submit", function (e) {
     document.getElementById("error-message").textContent = '';
 
     // Make an API request using the fetch() function.
-    fetch('http://127.0.0.1:8001/vacant_rooms', {
+    fetch('http://127.0.0.1:8001/api/roomonboard/vacant_rooms', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
