@@ -2,7 +2,7 @@ from fastapi import FastAPI,APIRouter
 from models import *
 from mongo_db import *
 
-router = APIRouter()
+router = APIRouter(prefix='/pgonboard')
 
 
 @router.post('/pg_onboard',tags=['On Board'])

@@ -6,7 +6,7 @@ import pymongo
 from bson import json_util
 import json
 from get_calls import *
-router = APIRouter()
+router = APIRouter(prefix='/roomonboard')
 
 @router.post('/vacant_rooms',tags=['On Board'])
 async def no_of_room_vacant(request : room_master):

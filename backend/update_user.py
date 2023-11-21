@@ -5,7 +5,7 @@ import hashlib
 from Authentication import *
 
 
-router = APIRouter()
+router = APIRouter(prefix='/user')
 
 
 

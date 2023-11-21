@@ -23,7 +23,7 @@
     <script>
         let order_id;
         let data1
-        fetch('http://127.0.0.1:8001/create_payment', {
+        fetch('http://127.0.0.1:8001/api/payment/create_payment', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -62,7 +62,7 @@
                         razorpay_signature: response.razorpay_signature
                     };
                     console.log({"data" : data1});
-                    fetch('http://127.0.0.1:8001/verify_payment', {
+                    fetch('http://127.0.0.1:8001/api/payment/verify_payment', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'

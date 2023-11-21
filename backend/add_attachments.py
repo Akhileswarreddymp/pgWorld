@@ -5,7 +5,7 @@ import os
 from fastapi.responses import FileResponse
 
 
-router = APIRouter()
+router = APIRouter(prefix='/attachments')
 
 @router.post('/upload_pics',tags=['Attachments'])
 async def add_attachment(request: List[UploadFile] = None):

@@ -10,7 +10,7 @@ import jinja2
 import json
 
 
-router = APIRouter()
+router = APIRouter(prefix='/payment')
 
 class PaymentRequest(pydantic.BaseModel):
     type_of_service: str
