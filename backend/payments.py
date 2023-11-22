@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from models import *
 from mongo_db import *
 import httpx
@@ -8,6 +8,7 @@ import secrets
 import razorpay
 import jinja2
 import json
+from jwt_authorize import *
 
 
 router = APIRouter(prefix='/payment')
@@ -27,7 +28,7 @@ async def create_payment():
     key_id = "rzp_test_7OEfNThHSPE7Nb"
     key_secret = "TNDKO5lng1XtQ65sDlt0nqw0"
     redis_client = redisclient()
-    name  =  redis_client.redis_client.get('name').decode(),
+    name  =  redis_client.redis_client.get('name').decode()
     amount = 10
     client = razorpay.Client(auth=(key_id,key_secret))
     order = {
@@ -77,6 +78,9 @@ async def verify_payment(request : verify_request):
         }
         storing_into_mongo = collection.insert_one(data)
         print("registred Successfully")
-        return {"msg" : "Payment Successful"}
+        return {
+                "msg" : "Payment Successful",
+                "token" : signJWT(redis_client.redis_client.get("temp_mail"))
+            }
     else:
         raise HTTPException(status_code=4010, detail="Wrong Credentials received")

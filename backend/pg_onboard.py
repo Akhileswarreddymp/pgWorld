@@ -1,11 +1,12 @@
-from fastapi import FastAPI,APIRouter
+from fastapi import FastAPI,APIRouter,Depends
 from models import *
 from mongo_db import *
+from jwt_authorize import *
 
 router = APIRouter(prefix='/pgonboard')
 
 
-@router.post('/pg_onboard',tags=['On Board'])
+@router.post('/pg_onboard',tags=['On Board'],dependencies=[Depends(jwtBearer())])
 async def pg_onboard(request : Pg_Master):
     if not isinstance(request,dict):
         data = request.dict()

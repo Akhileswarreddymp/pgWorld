@@ -53,20 +53,19 @@ async def redis_store(otp):
     
 
 # login
-@router.post("/login", tags=['Authentication'])
-async def verification(request: verify_params):
-    redis_client = redisclient()
-    passwo = hashlib.md5(request.password.encode('utf-8')).hexdigest()
-    # client = pymongo.MongoClient("mongodb://localhost:27017/")
-    # collection = client.get_database("Users").get_collection("users")
-    collection = await connect_collection("Users","users")
-    print("passwo======>",passwo)
-    result = collection.find_one({"email": request.username})
-    print("db_email===>",result)
-    if result.get("email") == request.username and result.get("password") == passwo:
-        return {"msg" : "Successfully Logged in"}
-    else:
-        raise HTTPException(status_code=401, detail="Wrong Credentials received")
+# @router.post("/login", tags=['Authentication'])
+# async def verification(request: verify_params):
+#     passwo = hashlib.md5(request.password.encode('utf-8')).hexdigest()
+#     # client = pymongo.MongoClient("mongodb://localhost:27017/")
+#     # collection = client.get_database("Users").get_collection("users")
+#     collection = await connect_collection("Users","users")
+#     print("passwo======>",passwo)
+#     result = collection.find_one({"email": request.username})
+#     print("db_email===>",result)
+#     if result.get("email") == request.username and result.get("password") == passwo:
+#         return {"msg" : "Successfully Logged in"}
+#     else:
+#         raise HTTPException(status_code=401, detail="Wrong Credentials received")
 
 # Pydantic model for reset Password
 class reset_pass(pydantic.BaseModel):
@@ -80,10 +79,7 @@ class reset_pass(pydantic.BaseModel):
 async def reset_password(request : reset_pass):
     collection = await connect_collection("Users","users")
     result = collection.find_one({"email": request.username})
-    print("result==>",result)
     old_pass = hashlib.md5(request.old_password.encode('utf-8')).hexdigest()
-    print("password is ==>",result.get("password"))
-    print("new_pass==>",old_pass)
     if old_pass == result.get("password"):
         filter = {"_id":result.get("_id")}
         print("filter==>",filter)

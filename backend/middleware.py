@@ -51,9 +51,9 @@ app.add_middleware(
 
 
 
-@app.middleware('http')
-async def authMiddleware(request : fastapi.Request , call_next):
-    response = fastapi.Response(None, 403)
-    cookie = request.cookies.get(cookie_name, None)
-    print(cookie_name)
-    print("cookie",cookie)
+# @app.middleware('http')
+# async def authMiddleware(request : fastapi.Request , call_next):
+#     response = fastapi.Response(None, 403)
+#     cookie = request.cookies.get(cookie_name, None)
+#     print(cookie_name)
+#     print("cookie",cookie)

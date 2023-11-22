@@ -1,4 +1,4 @@
-from fastapi import APIRouter,HTTPException
+from fastapi import APIRouter,HTTPException,Depends
 from models import *
 from mongo_db import *
 import datetime
@@ -6,9 +6,11 @@ import pymongo
 from bson import json_util
 import json
 from get_calls import *
+from jwt_authorize import *
+
 router = APIRouter(prefix='/roomonboard')
 
-@router.post('/vacant_rooms',tags=['On Board'])
+@router.post('/vacant_rooms',tags=['On Board'],dependencies=[Depends(jwtBearer())])
 async def no_of_room_vacant(request : room_master):
     if not isinstance(request,dict):
         data = request.dict()

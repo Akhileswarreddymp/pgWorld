@@ -3,7 +3,7 @@ from models import *
 from mongo_db import *
 import hashlib
 from Authentication import *
-
+from jwt_auth import *
 
 router = APIRouter(prefix='/user')
 
@@ -34,7 +34,9 @@ async def register(data: register_params):
         await send_otp(redis_client.redis_client.get("temp_mail").decode())
         name = redis_client.redis_client.setex("name",300,data.name)
         contact_number = redis_client.redis_client.setex("contact_number",300,data.contact_number)
-        return {"msg" : "Otp sent Successfully"}
+        return {
+            "msg" : "Otp sent Successfully",
+        }
     else:
         return {"msg" : "Passwords are not matching"}
     

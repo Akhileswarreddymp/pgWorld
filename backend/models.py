@@ -20,6 +20,14 @@ class register_params(pydantic.BaseModel):
     created_time : typing.Optional[datetime.datetime]
     updated_time : typing.Optional[datetime.datetime]
     profile_pic : typing.Optional[str] = pydantic.Field("",**{})
+    class config:
+        schema_reg = {
+            "demo" :{
+                "username" : "ak@gmail.com",
+                "password" : "12345"
+            }
+            
+        }
 
 class verify_params(pydantic.BaseModel):
     username : str
