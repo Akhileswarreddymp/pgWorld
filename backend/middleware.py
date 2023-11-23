@@ -67,12 +67,14 @@ async def authMiddleware(request: fastapi.Request, call_next):
         '/api/payment/verify_payment',
         '/api/send_otp',
         "/docs",
-        "/openapi.json"
+        "/openapi.json",
+        
     ]
+    # if request.method == "OPTIONS":
+    #     return await call_next(request)
     if request.url.path in allowed_paths:
         return await call_next(request)
-    if request.method == "OPTIONS":
-        return await call_next(request)
+    
     cookie_value = request.cookies.get(cookie_name)
     print("request_headers=",request.headers)
     print(f"Cookie Name: {cookie_name}")

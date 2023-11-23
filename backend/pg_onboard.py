@@ -6,7 +6,7 @@ from jwt_authorize import *
 router = APIRouter(prefix='/pgonboard')
 
 
-@router.post('/pg_onboard',tags=['On Board'],dependencies=[Depends(jwtBearer())])
+@router.post('/pg_onboard',tags=['On Board'])
 async def pg_onboard(request : Pg_Master):
     if not isinstance(request,dict):
         data = request.dict()

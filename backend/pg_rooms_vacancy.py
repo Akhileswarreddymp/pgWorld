@@ -10,7 +10,7 @@ from jwt_authorize import *
 
 router = APIRouter(prefix='/roomonboard')
 
-@router.post('/vacant_rooms',tags=['On Board'],dependencies=[Depends(jwtBearer())])
+@router.post('/vacant_rooms',tags=['On Board'])
 async def no_of_room_vacant(request : room_master):
     if not isinstance(request,dict):
         data = request.dict()
