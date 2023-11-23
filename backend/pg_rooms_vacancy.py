@@ -24,7 +24,7 @@ async def no_of_room_vacant(request : room_master):
     print("record====>",record)
     current_datetime = datetime.datetime.now()
     formatted_datetime = current_datetime.strftime("%Y-%m-%dT%H:%M:%S")
-    if record1:
+    if not record1:
         db_data = {
             "pg_name" : data.get("pg_name"),
             "pg_code" : data.get("pg_code"),
@@ -58,6 +58,7 @@ async def no_of_room_vacant(request : room_master):
         return {"msg" : "room details onboarded Successfully"}
     else:
         filter = {"_id":record.get("_id")}
+        print("record_id",filter)
         db_data = {
             "pg_name" : data.get("pg_name"),
             "pg_code" : data.get("pg_code"),

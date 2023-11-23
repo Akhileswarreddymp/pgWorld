@@ -2,7 +2,7 @@ from fastapi import FastAPI,HTTPException,APIRouter
 import asyncio
 import hashlib
 from models import *
-from main import *
+# from main import *
 import pydantic
 import pymongo
 from mongo_db import *

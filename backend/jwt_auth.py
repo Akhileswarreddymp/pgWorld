@@ -5,6 +5,8 @@ from decouple import config
 from mongo_db import *
 import hashlib
 from models import *
+import fastapi
+import uuid
 
 router = APIRouter()
 
@@ -29,12 +31,19 @@ def signJWT(userId: str):
     }
 
     token = jwt.encode(payload, JWT_SECRET, algorithm=JWT_ALGORITHM)
+    print(token_resp(token))
     return token_resp(token)
 
 def decodeJWT(token: str):
     try:
         decoded_token = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
-        return decoded_token if decoded_token['exp'] >= time.time() else None
+        print("decoded_token",decoded_token)
+        exp_claim = decoded_token.get('exp')
+        
+        if exp_claim is None:
+            return {"error": "'exp' claim is missing in the token"}
+        
+        return decoded_token if exp_claim >= time.time() else None
     except:
         return {"error": "Token has expired"}
     
@@ -49,8 +58,17 @@ async def check_user(data):
     
 @router.post("/login", tags=['Authentication'])
 async def verification(request: verify_params):
+    cookie_name = "Akhil"
     if check_user(request):
-        return signJWT(request.username)
+        cookie_id = str(uuid.uuid4())
+        print("cookie_id",cookie_id)
+        access_token =  signJWT(request.username)
+        redis_client = redisclient()
+        store_cookie_id = redis_client.redis_client.hset("CookieStore", cookie_id, "useraccesstoken." + access_token["access_token"])
+        response = fastapi.responses.JSONResponse({"status": "Logged in Successfully","token" : access_token}, status_code=200)
+        response.set_cookie(cookie_name,cookie_id, path="/", expires=3600, samesite="Lax", secure=True)
+        print(response)
+        return response
     else:
         raise HTTPException(status_code=401, detail="Wrong Credentials received")
 
