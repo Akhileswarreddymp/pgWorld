@@ -89,7 +89,8 @@ document.getElementById("Onboard_form").addEventListener("submit", function (e) 
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
+        credentials : "include"
     })
     .then(function(response) {
         console.log("Response status code:", response.status);

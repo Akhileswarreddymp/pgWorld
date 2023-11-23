@@ -24,9 +24,12 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
     })
     .then(function(response) {
         console.log("Response status code:", response.status);
+        
         if (response.status === 200) {
-            // Redirect to the "sign_reg.html" page on successful login.
-            window.location.href = "main_UI.html";
+            console.log("Authentication successful. Redirecting in 2 seconds...");
+            setTimeout(function () {
+                window.location.href = "onboard.html";
+            }, 2000); 
         } else {
             // Handle authentication failure and display error message.
             throw new Error('Authentication failed');
