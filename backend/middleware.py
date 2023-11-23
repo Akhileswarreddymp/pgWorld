@@ -70,8 +70,8 @@ async def authMiddleware(request: fastapi.Request, call_next):
         "/openapi.json",
         
     ]
-    # if request.method == "OPTIONS":
-    #     return await call_next(request)
+    if request.method == "OPTIONS":
+        return await call_next(request)
     if request.url.path in allowed_paths:
         return await call_next(request)
     
