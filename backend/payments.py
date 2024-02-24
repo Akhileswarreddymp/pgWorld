@@ -83,4 +83,4 @@ async def verify_payment(request : verify_request):
                 "token" : signJWT(redis_client.redis_client.get("temp_mail"))
             }
     else:
-        raise HTTPException(status_code=4010, detail="Wrong Credentials received")
+        raise HTTPException(status_code=4010, detail="Wrong Credentials received to validate payment")
