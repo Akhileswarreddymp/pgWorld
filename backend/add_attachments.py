@@ -29,4 +29,4 @@ async def download_ticket(filename: str):
     file_path = f"/Users/mango/Documents/updated_project_file/pgWorld/pg_pics/{filename}"
     if not os.path.exists(file_path):
         print("file not found")
-    return FileResponse(file_path, filename=filename)
+    return FileResponse(file_path, filename=filename) 
