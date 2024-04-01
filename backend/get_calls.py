@@ -9,7 +9,7 @@ from jwt_authorize import *
 from bson import ObjectId
 
 
-router = APIRouter()
+router = APIRouter() 
 
 class query(pydantic.BaseModel):
     query : list[dict]
